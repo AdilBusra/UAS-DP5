@@ -14,7 +14,7 @@ type
 
 var
   Data : array [1..99] of Booking;
-  Nama, JumlahOrang, Token, InputToken : string;
+  Nama, JumlahOrang, Token, TokenAnda : string;
   Pilih, Lanjut, NoMeja : char;
   n, i : Integer;
   TotalKeseluruhan : LongInt;
@@ -65,7 +65,7 @@ function HitungHargaMinuman(Minuman : string): LongInt;
 
 function GenerateToken: string;
   const
-    Chars = '0123456789';
+    Angka = '0123456789';
   var
     i: Integer;
     temp: string;
@@ -74,7 +74,7 @@ function GenerateToken: string;
     temp := '';
     for i := 1 to 12 do
       begin
-        temp := temp + Chars[Random(Length(Chars)) + 1];
+        temp := temp + Angka[Random(Length(Angka))+1];
         if (i mod 4 = 0) and (i < 12) then
           begin
             temp := temp + ' '; 
@@ -83,7 +83,7 @@ function GenerateToken: string;
     GenerateToken := temp;
   end;
 
-procedure PesanBooking;
+procedure PesanMenu;
   label 
     1;
   var
@@ -97,13 +97,13 @@ procedure PesanBooking;
     repeat
       1:
       writeln('Menu Makanan   :');
-      writeln('Wagyu-----------------Rp.700.0000');
-      writeln('Kaviar----------------Rp.700.0000');
-      writeln('Oyster----------------Rp.600.0000');
-      writeln('Truffle---------------Rp.600.0000');
-      writeln('Salad-----------------Rp.500.0000');
-      writeln('Crab------------------Rp.400.0000');
-      writeln('Guacsmole-------------Rp.300.0000');
+      writeln('Wagyu-----------------Rp.700.000');
+      writeln('Kaviar----------------Rp.700.000');
+      writeln('Oyster----------------Rp.600.000');
+      writeln('Truffle---------------Rp.600.000');
+      writeln('Salad-----------------Rp.500.000');
+      writeln('Crab------------------Rp.400.000');
+      writeln('Guacsmole-------------Rp.300.000');
       writeln('Tidak Pesan-----------Ketik "Tidak"');
       writeln;
       write('Pesan Makanan  : ');
@@ -112,13 +112,13 @@ procedure PesanBooking;
       readln(JumlahMakanan);
       writeln;
       writeln('Menu Minuman   :');
-      writeln('Wine------------------Rp.500.0000');
-      writeln('Mojito----------------Rp.500.0000');
-      writeln('Affogato--------------Rp.400.0000');
-      writeln('Cappucino-------------Rp.400.0000');
-      writeln('Espresso--------------Rp.300.0000');
-      writeln('Mocha-----------------Rp.200.0000');
-      writeln('Mineral---------------Rp.100.0000');
+      writeln('Wine------------------Rp.500.000');
+      writeln('Mojito----------------Rp.500.000');
+      writeln('Affogato--------------Rp.400.000');
+      writeln('Cappucino-------------Rp.400.000');
+      writeln('Espresso--------------Rp.300.000');
+      writeln('Mocha-----------------Rp.200.000');
+      writeln('Mineral---------------Rp.100.000');
       writeln('Tidak Pesan-----------Ketik "Tidak"');
       writeln;
       write('Pesan Minuman  : ');
@@ -174,9 +174,9 @@ procedure Bayar;
   begin
     repeat
     writeln('Masukkan token Anda:');
-    readln(InputToken);
+    readln(TokenAnda);
     writeln;
-    if InputToken = Token then
+    if TokenAnda = Token then
       begin
         writeln('Token valid! Berikut detail pembelian Anda:');
         writeln;
@@ -194,9 +194,9 @@ procedure Bayar;
       end
     else
       begin
-        writeln('Token tidak valid. Pemesanan dibatalkan.');
+        writeln('Token tidak valid. Silahkan coba lagi.');
       end;
-    until InputToken = Token;
+    until TokenAnda = Token;
   end;
 
 begin
@@ -214,7 +214,7 @@ begin
   readln(NoMeja);
   writeln;
 
-  PesanBooking;
+  PesanMenu;
   writeln;
 
   Token := GenerateToken;
@@ -225,7 +225,7 @@ begin
   readln(Lanjut);
   writeln;
 
-  if UpCase(Lanjut) = 'Y' then
+  if (Lanjut = 'Y') or (Lanjut = 'y') then
     begin
       Bayar;  
     end
